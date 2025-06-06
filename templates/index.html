@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Chat with our Movie Chatbot!</h1>
+    <div>
+        <label for="user_input">Ask me about a movie or anything else:</label><br>
+        <input type="text" id="user_input" name="user_input" />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    <div id="chatbox"></div>
+
+    <script>
+        function sendMessage() {
+            const userInput = document.getElementById("user_input").value;
+            if (userInput.trim() !== "") {
+                $('#chatbox').append(`<p><b>You:</b> ${userInput}</p>`);
+                $.post('/chat', { user_input: userInput }, function(data) {
+                    $('#chatbox').append(`<p><b>Bot:</b> ${data.response}</p>`);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
